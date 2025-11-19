@@ -46,7 +46,7 @@ def fetch_minute_chunk(since_timestamp: datetime):
         supabase.table("minute_ohlc")
         .select("*")
         .gt("ts", ts_str)
-        .order("ts", desc=False)
+        .order("ts", desc=False)   # <-- CORRECT (NO asc ARG)
         .limit(CHUNK_SIZE)
         .execute()
     )
@@ -139,7 +139,7 @@ def fetch_5m_chunk(since_timestamp: datetime):
         supabase.table("ohlc_5m")
         .select("*")
         .gt("ts_bucket", ts_str)
-        .order("ts_bucket", desc=False)
+        .order("ts_bucket", desc=False)  # <-- FIXED
         .limit(CHUNK_SIZE)
         .execute()
         .data
@@ -196,7 +196,7 @@ def fetch_1h_chunk(since_timestamp: datetime):
         supabase.table("ohlc_1h")
         .select("*")
         .gt("ts_bucket", ts_str)
-        .order("ts_bucket", desc=False)
+        .order("ts_bucket", desc=False)  # <-- FIXED
         .limit(CHUNK_SIZE)
         .execute()
         .data
